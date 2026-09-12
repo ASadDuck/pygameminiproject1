@@ -58,6 +58,8 @@ while running:
     text = font.render(f"Time: [{curtime.strftime('%H')}:{curtime.strftime('%M')}]", True, (0, 0, 0))
     screen.blit(text, (screen.width/2-text.width/2, 500))
 
+    
+
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
