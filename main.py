@@ -73,15 +73,15 @@ def main():
         if len(clock_num_points) == 2:
             for num in range(2):
                 temp_text = num_font.render(f"{clock_numbers[num*6 + 5]}", True, (oppo_background(background_color)))
-                screen.blit(temp_text, (clock_num_points[num].x, clock_num_points[num].y))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
         if len(clock_num_points) == 4:
             for num in range(4):
                 temp_text = num_font.render(f"{clock_numbers[num*3 + 2]}", True, (oppo_background(background_color)))
-                screen.blit(temp_text, (clock_num_points[num].x, clock_num_points[num].y))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
         if len(clock_num_points) == 12:
             for num in range(12):
                 temp_text = num_font.render(f"{clock_numbers[(num+2) % 12]}", True, (oppo_background(background_color))) #thank you https://stackoverflow.com/questions/47880511/python-loop-back-to-beginning-of-list
-                screen.blit(temp_text, ((clock_num_points[num].x)-temp_text.width/2, clock_num_points[num].y))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
 
 
         screen.blit(text, (screen.width/2-text.width/2, 500))
@@ -112,7 +112,7 @@ def find_circle_points(middle, r, degree_interval):
 
 def find_num_points(middle, r, state):
     nums = []
-    r_adj = r - r/8
+    r_adj = r - r/5
     curr_angle = 0
     if state == 0:
         for num in range(2):
