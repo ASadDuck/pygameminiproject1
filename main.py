@@ -11,6 +11,11 @@ pg.init()
 screen = pg.display.set_mode((1000,700))
 pg.display.set_caption('The Big Ugly Clock')
 
+icon = pg.image.load('clock_logo.svg').convert()
+icon = pg.transform.smoothscale(icon, (512, 512))
+icon.set_colorkey((0,0,0))
+pg.display.set_icon(icon)
+
 background_colors_dict = {"Light": (207, 207, 207),
                      "Dark": (255-207,255-207,255-207),
                      "Crimson": (197, 18, 54),
@@ -43,7 +48,7 @@ background_dropdown = Dropdown(screen,
 circ_rad = 150
 # TODO
 # lerp or whatever to other colors
-
+# zero numbers effect (duh)
 
 def main():
     background_color = (207, 207, 207)
