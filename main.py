@@ -43,19 +43,19 @@ background_dropdown = Dropdown(screen,
 
 circ_rad = 150
 # TODO
-# lines moving cooly
 # lerp or whatever to other colors
 
 
 def main():
     background_color = (207, 207, 207)
+    circle_closing = True
     running = True
     point_slider = Slider(screen, 20, screen.get_height() - 100, 100, 20, min=5, max=90, step=3, initial=45,
-                          color=background_color, point_slider=oppo_background(background_color))
+                          colour=background_color, point_slider=oppo_background(background_color))
     point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, point_slider.getWidth(), point_slider.getHeight()+20, fontSize=25, textHAlign= "centre")
 
     num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial=2,
-                        color=background_color, point_slider=oppo_background(background_color)) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
+                        colour=background_color, point_slider=oppo_background(background_color)) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
     num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, num_slider.getWidth(),
                            num_slider.getHeight() + 20, fontSize=25, textHAlign="centre")
 
@@ -81,6 +81,10 @@ def main():
         # use function to find each point for lines
         points = find_circle_points(middle, circ_rad, point_slider_val)
 
+        if points[0] != points[len(points)-1]:
+            circle_closing = True
+        else: circle_closing = False
+
         # slider outputs
         point_output.setText(point_slider_val)
         num_output.setText(num_vals_dict[num_slider_val])
@@ -88,7 +92,7 @@ def main():
         # draw the lines using the vectors from our function
         pg.draw.lines(screen,
                       (oppo_background(background_color)),
-                      True,
+                      circle_closing,
                       points,
                       width=5)
 
@@ -180,7 +184,7 @@ def get_line_point(middle, r, time, type):
     middle_x = middle.x
     middle_y = middle.y
     if type == 's':
-        angle = math.radians(6 * time.second)
+        angle = math.radians((6 * time.second)-90)
         x = middle_x + (r - r/2.2) * math.cos(angle)
         y = middle_y + (r - r/2.2) * math.sin(angle)
         point = pg.Vector2(x, y)
