@@ -9,13 +9,14 @@ pg.init()
 screen = pg.display.set_mode((700, 700))
 clock = pg.time.Clock()
 running = True
-background_color = (207, 207, 207)
+
 
 point_slider = Slider(screen, 20, screen.height - 100, 100, 20, min=5, max=90, step=3, initial= 45)
 point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, 50, 50, fontSize=20)
 
 num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial= 2) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
 num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, 50, 50, fontSize=20)
+
 
 point_output.disable()
 num_output.disable()
@@ -31,15 +32,16 @@ num_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
 
 
 def main():
+    background_color = (207, 207, 207)
     running = True
-    while running:
 
-        for event in pg.event.get():
+    while running:
+        events = pg.event.get()
+        for event in events:
             if event.type == pg.QUIT:
                 running = False
 
         # background, events thingy, define slider vals now so i can do function stuff and the current time as we have a clock no?
-        events = pg.event.get()
         screen.fill(background_color)
         point_slider_val= point_slider.getValue()
         num_slider_val = num_slider.getValue()
@@ -136,6 +138,10 @@ def find_num_points(middle, r, state):
             nums.append(pg.Vector2(x, y))
             curr_angle += 30
     return nums
+
+def change_background_color():
+    global background_color
+
 
 #sets the color to the opposite of the background maybe idk
 def oppo_background(background):
