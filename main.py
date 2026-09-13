@@ -6,16 +6,17 @@ from pygame_widgets.textbox import TextBox
 import pygame as pg
 
 pg.init()
-screen = pg.display.set_mode((700, 700))
+screen = pg.display.set_mode((700,700))
 clock = pg.time.Clock()
 running = True
 
 
-point_slider = Slider(screen, 20, screen.height - 100, 100, 20, min=5, max=90, step=3, initial= 45)
+point_slider = Slider(screen, 20, screen.get_height() - 100, 100, 20, min=5, max=90, step=3, initial= 45)
 point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, 50, 50, fontSize=20)
 
 num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial= 2) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
 num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, 50, 50, fontSize=20)
+
 
 
 point_output.disable()
@@ -41,12 +42,12 @@ def main():
             if event.type == pg.QUIT:
                 running = False
 
-        # background, events thingy, define slider vals now so i can do function stuff and the current time as we have a clock no?
+        # background, define slider vals now so i can do function stuff and the current time as we have a clock no?
         screen.fill(background_color)
         point_slider_val= point_slider.getValue()
         num_slider_val = num_slider.getValue()
         curtime = datetime.now()
-        middle = pg.Vector2(screen.width/2, screen.height/2)
+        middle = pg.Vector2(screen.get_width()/2, screen.get_height()/2)
 
         # use function to find each point for lines
         points = find_circle_points(middle, circ_rad, point_slider_val)
@@ -62,31 +63,33 @@ def main():
                       points,
                       width=5)
 
+        # Hands
         for hand in "smh": # smh cause seconds minutes hours for hands
             pg.draw.aaline(screen,
                            (oppo_background(background_color)),
-                           middle, get_line_point(middle, circ_rad, curtime, hand),
-                           width=3)
+                           middle, get_line_point(middle, circ_rad, curtime, hand))
 
+        # the time text
         text = main_font.render(f"Time: [{curtime.strftime('%H')}:{curtime.strftime('%M')}:{curtime.strftime('%S')}]", True, (oppo_background(background_color)))
 
+        # display the numbers
         clock_numbers = range(1,13)
         clock_num_points = find_num_points(middle, circ_rad, num_slider_val)
         if len(clock_num_points) == 2:
             for num in range(2):
                 temp_text = num_font.render(f"{clock_numbers[num*6 + 5]}", True, (oppo_background(background_color)))
-                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.get_width() / 2, clock_num_points[num].y - temp_text.get_height()/2))
         if len(clock_num_points) == 4:
             for num in range(4):
                 temp_text = num_font.render(f"{clock_numbers[num*3 + 2]}", True, (oppo_background(background_color)))
-                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.get_width() / 2, clock_num_points[num].y - temp_text.get_height()/2))
         if len(clock_num_points) == 12:
             for num in range(12):
                 temp_text = num_font.render(f"{clock_numbers[(num+2) % 12]}", True, (oppo_background(background_color))) #thank you https://stackoverflow.com/questions/47880511/python-loop-back-to-beginning-of-list
-                screen.blit(temp_text, (clock_num_points[num].x - temp_text.width / 2, clock_num_points[num].y - temp_text.height/2))
+                screen.blit(temp_text, (clock_num_points[num].x - temp_text.get_width() / 2, clock_num_points[num].y - temp_text.get_height()/2))
 
 
-        screen.blit(text, (screen.width/2-text.width/2, 500))
+        screen.blit(text, (screen.get_width()/2-text.get_width()/2, 500))
 
         pygame_widgets.update(events)
         pg.display.update()
@@ -139,9 +142,10 @@ def find_num_points(middle, r, state):
             curr_angle += 30
     return nums
 
-def change_background_color():
+def change_background_color(new_col):
     global background_color
-
+    background_color = new_col
+    return
 
 #sets the color to the opposite of the background maybe idk
 def oppo_background(background):
