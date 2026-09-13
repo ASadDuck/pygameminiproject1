@@ -22,9 +22,10 @@ background_colors_dict = {"Light": (207, 207, 207),
                      "Violet":  (148,0,255),
                      "Deadlock": (238, 223, 190)}
 
-num_vals_dict = {0: 2,
-                 1: 4,
-                 2: 12}
+num_vals_dict = {0: 0,
+                 1: 2,
+                 2: 4,
+                 3: 12}
 
 clock = pg.time.Clock()
 running = True
@@ -45,10 +46,9 @@ background_dropdown = Dropdown(screen,
 
 
 
-circ_rad = 150
+circ_rad = 200
 # TODO
 # lerp or whatever to other colors
-# zero numbers effect (duh)
 
 def main():
     background_color = (207, 207, 207)
@@ -58,7 +58,7 @@ def main():
     point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, point_slider.getWidth(), point_slider.getHeight()+20,
                            fontSize=25, textHAlign= "centre")
 
-    num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial=2,
+    num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=3, step=1, initial=2,
                         colour=background_color, point_slider=oppo_background(background_color)) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
     num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, num_slider.getWidth(), num_slider.getHeight() + 20,
                          fontSize=25, textHAlign="centre")
@@ -157,20 +157,22 @@ def find_num_points(middle, r, state):
     r_adj = r - r/5
     curr_angle = 0
     if state == 0:
+        nums.append(pg.Vector2(0,0))
+    if state == 1:
         for num in range(2):
             angle = math.radians(curr_angle+90)
             x = middle.x + r_adj * math.cos(angle)
             y = middle.y + r_adj * math.sin(angle)
             nums.append(pg.Vector2(x, y))
             curr_angle += 180
-    if state == 1:
+    if state == 2:
         for num in range(4):
             angle = math.radians(curr_angle)
             x = middle.x + r_adj * math.cos(angle)
             y = middle.y + r_adj * math.sin(angle)
             nums.append(pg.Vector2(x, y))
             curr_angle += 90
-    if state == 2:
+    if state == 3:
         for num in range(12):
             angle = math.radians(curr_angle)
             x = middle.x + r_adj * math.cos(angle)
