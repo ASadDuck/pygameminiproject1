@@ -15,8 +15,7 @@ background_colors_dict = {"Light": (207, 207, 207),
                      "Dark": (255-207,255-207,255-207),
                      "Crimson": (197, 18, 54),
                      "Violet":  (148,0,255),
-                     "Deadlock": (238, 223, 190)
-                    }
+                     "Deadlock": (238, 223, 190)}
 
 num_vals_dict = {0: 2,
                  1: 4,
@@ -48,16 +47,16 @@ circ_rad = 150
 
 def main():
     background_color = (207, 207, 207)
-    circle_closing = True
     running = True
     point_slider = Slider(screen, 20, screen.get_height() - 100, 100, 20, min=5, max=90, step=3, initial=45,
                           colour=background_color, point_slider=oppo_background(background_color))
-    point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, point_slider.getWidth(), point_slider.getHeight()+20, fontSize=25, textHAlign= "centre")
+    point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, point_slider.getWidth(), point_slider.getHeight()+20,
+                           fontSize=25, textHAlign= "centre")
 
     num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial=2,
                         colour=background_color, point_slider=oppo_background(background_color)) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
-    num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, num_slider.getWidth(),
-                           num_slider.getHeight() + 20, fontSize=25, textHAlign="centre")
+    num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, num_slider.getWidth(), num_slider.getHeight() + 20,
+                         fontSize=25, textHAlign="centre")
 
     point_output.disable()
     num_output.disable()
@@ -122,7 +121,7 @@ def main():
                 screen.blit(temp_text, (clock_num_points[num].x - temp_text.get_width() / 2, clock_num_points[num].y - temp_text.get_height()/2))
 
 
-        screen.blit(text, (screen.get_width()/2-text.get_width()/2, 500))
+        screen.blit(text, (screen.get_width()/2-text.get_width()/2, middle.y+circ_rad))
 
         pygame_widgets.update(events)
         pg.display.update()
