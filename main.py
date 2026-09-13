@@ -3,31 +3,46 @@ from datetime import datetime
 import pygame_widgets
 from pygame_widgets.slider import Slider
 from pygame_widgets.textbox import TextBox
+from pygame_widgets.dropdown import Dropdown
 import pygame as pg
 
+
 pg.init()
-screen = pg.display.set_mode((700,700))
+screen = pg.display.set_mode((1000,700))
+pg.display.set_caption('The Big Ugly Clock')
+
+background_colors_dict = {"Light": (207, 207, 207),
+                     "Dark": (255-207,255-207,255-207),
+                     "Crimson": (197, 18, 54),
+                     "Violet":  (148,0,255),
+                     "Deadlock": (238, 223, 190)
+                    }
+
+num_vals_dict = {0: 2,
+                 1: 4,
+                 2: 12}
+
 clock = pg.time.Clock()
 running = True
 
-
-point_slider = Slider(screen, 20, screen.get_height() - 100, 100, 20, min=5, max=90, step=3, initial= 45)
-point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, 50, 50, fontSize=20)
-
-num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial= 2) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
-num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, 50, 50, fontSize=20)
-
-
-
-point_output.disable()
-num_output.disable()
-
-circ_rad = 150
-
 main_font = pg.font.Font("ValveOccult-SemiBold.ttf", 30)
 num_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
+
+background_dropdown = Dropdown(screen,
+                               20, 20, 80, 30,
+                               choices=[
+                                   'Light',
+                                   'Dark',
+                                   'Crimson',
+                                   'Violet',
+                                   'Deadlock',
+                               ],
+                               name="Light", font=num_font, textHAlign="centre")
+
+
+
+circ_rad = 150
 # TODO
-# numbers using the points :P
 # lines moving cooly
 # lerp or whatever to other colors
 
@@ -35,6 +50,17 @@ num_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
 def main():
     background_color = (207, 207, 207)
     running = True
+    point_slider = Slider(screen, 20, screen.get_height() - 100, 100, 20, min=5, max=90, step=3, initial=45,
+                          color=background_color, point_slider=oppo_background(background_color))
+    point_output = TextBox(screen, point_slider.getX(), point_slider.getY() + 20, point_slider.getWidth(), point_slider.getHeight()+20, fontSize=25, textHAlign= "centre")
+
+    num_slider = Slider(screen, 20, point_slider.getY() - 100, 100, 20, min=0, max=2, step=1, initial=2,
+                        color=background_color, point_slider=oppo_background(background_color)) # state 0: 2 numbers (12 and 6), State 1: 4 numbers (12, 3, 6, 9), State 3: allem numbers
+    num_output = TextBox(screen, num_slider.getX(), num_slider.getY() + 20, num_slider.getWidth(),
+                           num_slider.getHeight() + 20, fontSize=25, textHAlign="centre")
+
+    point_output.disable()
+    num_output.disable()
 
     while running:
         events = pg.event.get()
@@ -42,7 +68,10 @@ def main():
             if event.type == pg.QUIT:
                 running = False
 
-        # background, define slider vals now so i can do function stuff and the current time as we have a clock no?
+        # background, color, define slider vals now so i can do function stuff and the current time as we have a clock no?
+        for x in background_colors_dict:
+            if x == background_dropdown.getSelected():
+                background_color = background_colors_dict[f"{x}"]
         screen.fill(background_color)
         point_slider_val= point_slider.getValue()
         num_slider_val = num_slider.getValue()
@@ -54,7 +83,7 @@ def main():
 
         # slider outputs
         point_output.setText(point_slider_val)
-        num_output.setText(num_slider_val)
+        num_output.setText(num_vals_dict[num_slider_val])
 
         # draw the lines using the vectors from our function
         pg.draw.lines(screen,
@@ -142,11 +171,6 @@ def find_num_points(middle, r, state):
             curr_angle += 30
     return nums
 
-def change_background_color(new_col):
-    global background_color
-    background_color = new_col
-    return
-
 #sets the color to the opposite of the background maybe idk
 def oppo_background(background):
     return (255 - background[0]),(255 - background[1]),(255 - background[2])
@@ -157,21 +181,22 @@ def get_line_point(middle, r, time, type):
     middle_y = middle.y
     if type == 's':
         angle = math.radians(6 * time.second)
-        x = middle_x + (r - r/3) * math.cos(angle)
-        y = middle_y + (r - r/3) * math.sin(angle)
+        x = middle_x + (r - r/2.2) * math.cos(angle)
+        y = middle_y + (r - r/2.2) * math.sin(angle)
         point = pg.Vector2(x, y)
     if type == 'm':
         angle = math.radians((6 * time.minute)-90)
-        x = middle_x + (r - r/5) * math.cos(angle)
-        y = middle_y + (r - r/5) * math.sin(angle)
+        x = middle_x + (r - r/3) * math.cos(angle)
+        y = middle_y + (r - r/3) * math.sin(angle)
         point = pg.Vector2(x, y)
     if type == 'h':
         angle = math.radians((0.5 * (60 * time.hour + time.minute))-90)
-        x = middle_x + (r - r/10) * math.cos(angle)
-        y = middle_y + (r - r/10) * math.sin(angle)
+        x = middle_x + (r - r/5) * math.cos(angle)
+        y = middle_y + (r - r/5) * math.sin(angle)
         point = pg.Vector2(x, y)
 
     return point
+
 
 if __name__ == "__main__":
     main()
