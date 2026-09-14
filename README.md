@@ -1,5 +1,7 @@
 # The Big Ugly Clock (TBUC)
 
+<img src="clock_readme.jpg">
+
 Uret SKAL have følgende:
 
 - ~~12 markeringer for hver time~~ DONE (ved faktisk ikke om tallene tæller men good enough)
@@ -8,16 +10,16 @@ Uret SKAL have følgende:
 
 Derefter er der fri leg på features og aesthetics, så jeg vil gerne lave:
 
-- Forskellige baggrundsfarver
-- ~~Customizability til markeringer og form af ur~~
-- En form for effect til linjerne
+- ~~Forskellige baggrundsfarver~~ DONE
+- ~~Customizability til markeringer og form af ur~~ DONE
+- ~~En form for effect til linjerne~~ orker ikke
 
 
 ## AI brug
 Her logger jeg alt jeg har brugt AI til. <br>
 Til dette projekt har jeg brugt:
-- Claude
-- 
+- Claude (1x)
+- (that's it)
 
 ### find_circle_points()
 I find_circle_points() prøvede jeg at bruge noget bullshit matematik, og fandt hurtigt ud af at det var den forkerte tilgang.<br>

@@ -16,12 +16,14 @@ icon = pg.transform.smoothscale(icon, (512, 512))
 icon.set_colorkey((0,0,0))
 pg.display.set_icon(icon)
 
+#the colors for the dropdown later
 background_colors_dict = {"Light": (207, 207, 207),
                      "Dark": (255-207,255-207,255-207),
                      "Crimson": (197, 18, 54),
-                     "Violet":  (148,0,255),
+                     "Violet":  (148,0,230),
                      "Deadlock": (238, 223, 190)}
 
+# couldnt think of a mathy way so i hardcoded it
 num_vals_dict = {0: 0,
                  1: 2,
                  2: 4,
@@ -33,6 +35,7 @@ running = True
 main_font = pg.font.Font("ValveOccult-SemiBold.ttf", 30)
 num_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
 
+# the dropdown in the corner, dont gotta set values since it defaults to choices
 background_dropdown = Dropdown(screen,
                                20, 20, 80, 30,
                                choices=[
@@ -151,7 +154,7 @@ def find_circle_points(middle, r, degree_interval):
 
     return points
 
-
+# finds the points for the numbers, again pretty much the same as the other methods
 def find_num_points(middle, r, state):
     nums = []
     r_adj = r - r/5
