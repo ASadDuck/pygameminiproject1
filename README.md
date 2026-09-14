@@ -18,7 +18,7 @@ Derefter er der fri leg på features og aesthetics, så jeg vil gerne lave:
 ## AI brug
 Her logger jeg alt jeg har brugt AI til. <br>
 Til dette projekt har jeg brugt:
-- Claude (1x)
+- Claude Sonnet 5 Low (1x)
 - (that's it)
 
 ### find_circle_points()
