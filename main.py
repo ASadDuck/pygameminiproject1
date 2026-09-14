@@ -32,8 +32,11 @@ num_vals_dict = {0: 0,
 clock = pg.time.Clock()
 running = True
 
+circ_rad = 150
+
 main_font = pg.font.Font("ValveOccult-SemiBold.ttf", 30)
-num_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
+num_font = pg.font.Font("ValveOccult-SemiBold.ttf", int(circ_rad/7.5))
+settings_font = pg.font.Font("ValveOccult-SemiBold.ttf", 15)
 
 # the dropdown in the corner, dont gotta set values since it defaults to choices
 background_dropdown = Dropdown(screen,
@@ -45,13 +48,8 @@ background_dropdown = Dropdown(screen,
                                    'Violet',
                                    'Deadlock',
                                ],
-                               name="Light", font=num_font, textHAlign="centre")
+                               name="Light", font=settings_font, textHAlign="centre")
 
-
-
-circ_rad = 200
-# TODO
-# lerp or whatever to other colors
 
 def main():
     background_color = (207, 207, 207)
