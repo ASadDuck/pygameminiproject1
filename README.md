@@ -15,8 +15,10 @@ Derefter er der fri leg på features og aesthetics, så jeg vil gerne lave:
 - ~~En form for effect til linjerne~~ orker ikke
 
 # Vigtigt
-Download pygame med
+Download disse libraries med
     pip install pygame-ce
+    pip install pygame_widgets
+
 
 ## AI brug
 Her logger jeg alt jeg har brugt AI til. <br>
