@@ -14,6 +14,9 @@ Derefter er der fri leg på features og aesthetics, så jeg vil gerne lave:
 - ~~Customizability til markeringer og form af ur~~ DONE
 - ~~En form for effect til linjerne~~ orker ikke
 
+# Vigtigt
+Download pygame med
+    pip install pygame-ce
 
 ## AI brug
 Her logger jeg alt jeg har brugt AI til. <br>
